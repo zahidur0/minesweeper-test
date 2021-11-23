@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Grid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">com.tsi.training.rahman.mohammed.minesweeper</a> &gt; <span class="el_source">Grid.java</span></div><h1>Grid.java</h1><pre class="source lang-java linenums">package com.tsi.training.rahman.mohammed.minesweeper;
+
+/* responsible for creating the grid and if the user requires
+* f - flag
+* x for bomb
+* forward slash for empty
+* o for unrevealed
+* */
+
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Random;
+
+
+<span class="fc" id="L15">public class Grid {</span>
+    ////////////////////////////////////////fields/////////////////////////////////////////////////////
+<span class="fc" id="L17">    private int totalBombs = 10;</span>
+<span class="fc" id="L18">    private int[][] bombIndices = new int[totalBombs][2];</span>
+    ////////////////////////////////////////properties/////////////////////////////////////////////////
+<span class="fc" id="L20">    private int size = 8;</span>
+
+<span class="fc" id="L22">    String coordinates = &quot;abcdefghijklmnopqrstuvwxyz&quot;;</span>
+    ////////////////////////////////////////constructors///////////////////////////////////////////////
+    ////////////////////////////////////////methods////////////////////////////////////////////////////
+
+    public Square[][] createGrid() {
+<span class="nc" id="L27">        Square[][] gridSquares = new Square[size][size];</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">            for (int j = 0; j &lt; size; j++) {</span>
+<span class="nc" id="L30">                gridSquares[i][j] = new Square();</span>
+            }
+        }
+
+
+        // randomly assigns bombs to squares
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        for (int i = 0; i &lt; totalBombs; i++) {</span>
+<span class="nc" id="L37">            int[] randomPair = bombIndexPair(bombIndices);</span>
+<span class="nc" id="L38">            bombIndices[i] = randomPair;</span>
+<span class="nc" id="L39">            gridSquares[randomPair[0]][randomPair[1]].setBomb(true);</span>
+        }
+
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">            for (int j = 0; j &lt; size; j++) {</span>
+<span class="nc" id="L44">                bombsNear(i, j, gridSquares);</span>
+            }
+        }
+<span class="nc" id="L47">        return gridSquares;</span>
+    }
+
+    public int[] bombIndexPair(int[][] bombIndices) {
+<span class="nc" id="L51">        Random rand = new Random();</span>
+<span class="nc" id="L52">        int[] randomPair = {rand.nextInt(size), rand.nextInt(size)};</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        for (int[] bombPair : bombIndices) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (Arrays.equals(randomPair, bombPair)) {</span>
+<span class="nc" id="L55">                return bombIndexPair(bombIndices);</span>
+            }
+        }
+<span class="nc" id="L58">        return randomPair;</span>
+    }
+
+    public void reveal(int x, int y, Square[][] gridSquares) {
+<span class="nc bnc" id="L62" title="All 4 branches missed.">        if (inBounds(x, y) &amp;&amp; !gridSquares[x][y].isRevealed()) {</span>
+<span class="nc" id="L63">                gridSquares[x][y].setRevealed(true);</span>
+<span class="nc bnc" id="L64" title="All 4 branches missed.">                if (gridSquares[x][y].getBombCount() == 0 &amp;&amp; !gridSquares[x][y].isBomb()){</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">                    for (int xOffset = -1; xOffset &lt;= 1; xOffset++) {</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">                        for (int yOffset = -1; yOffset &lt;= 1; yOffset++) {</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">                            if (inBounds(x + xOffset, y + yOffset)) {</span>
+<span class="nc" id="L68">                                reveal(x + xOffset, y + yOffset, gridSquares);</span>
+                            }
+                        }
+                    }
+                }
+        }
+<span class="nc" id="L74">    }</span>
+
+    public boolean inBounds(int x,int y){
+<span class="pc bpc" id="L77" title="3 of 8 branches missed.">        return x &gt;= 0 &amp;&amp; y &gt;= 0 &amp;&amp; size &gt; x &amp;&amp; size &gt; y;</span>
+    }
+
+    // calculates the bombCount of a specific square
+    private void bombsNear(int x, int y, Square[][] gridSquares) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (!gridSquares[x][y].isBomb()) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            for (int xOffset = -1; xOffset &lt;= 1; xOffset++) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                for (int yOffset = -1; yOffset &lt;= 1; yOffset++) {</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">                    if (inBounds(x + xOffset, y + yOffset) &amp;&amp; gridSquares[x + xOffset][y + yOffset].isBomb()) {</span>
+<span class="nc" id="L86">                            gridSquares[x][y].setBombCount(gridSquares[x][y].getBombCount() + 1);</span>
+                    }
+                }
+            }
+        }
+<span class="nc" id="L91">    }</span>
+
+    public void printGrid(Square[][] gridLabels) {
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L95">            System.out.print(&quot;  &quot; + coordinates.charAt(i) + &quot;  &quot;);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            for (int j = 0; j &lt; size; j++) {</span>
+<span class="nc" id="L97">                gridLabels[i][j].printSquare();</span>
+            }
+<span class="nc" id="L99">            System.out.println();</span>
+<span class="nc" id="L100">            System.out.println();</span>
+        }
+<span class="nc" id="L102">        System.out.print(&quot;     &quot;);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L104">            System.out.print(&quot;  &quot; + coordinates.charAt(i) + &quot;  &quot;);</span>
+        }
+<span class="nc" id="L106">        System.out.println();</span>
+<span class="nc" id="L107">        System.out.println();</span>
+<span class="nc" id="L108">    }</span>
+
+    public String getCoordinates() {
+<span class="fc" id="L111">        return coordinates;</span>
+    }
+
+    public int[][] getBombIndices() {
+<span class="fc" id="L115">        return bombIndices;</span>
+    }
+
+    public int getTotalBombs() {
+<span class="fc" id="L119">        return totalBombs;</span>
+    }
+
+    public void setTotalBombs(int totalBombs) {
+<span class="fc" id="L123">        this.totalBombs = totalBombs;</span>
+<span class="fc" id="L124">    }</span>
+
+    public int getSize() {
+<span class="fc" id="L127">        return size;</span>
+    }
+
+    public void setSize(int size) {
+<span class="fc" id="L131">        this.size = size;</span>
+<span class="fc" id="L132">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
