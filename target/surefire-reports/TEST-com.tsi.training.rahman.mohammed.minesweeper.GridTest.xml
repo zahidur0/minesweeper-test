@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="7" failures="0" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest" time="0.016" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest" time="0.006" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="17.0.1+12-LTS-39"/>
@@ -61,11 +61,11 @@
     <property name="sun.stdout.encoding" value="cp437"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testSetSize" time="0.016"/>
-  <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testGetTotalBombs" time="0"/>
+  <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testInBounds" time="0.006"/>
   <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testSetTotalBombs" time="0"/>
   <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testGetSize" time="0"/>
-  <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testGetCoordinates" time="0"/>
+  <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testSetSize" time="0"/>
   <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testGetBombIndices" time="0"/>
-  <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testInBounds" time="0"/>
+  <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testGetCoordinates" time="0"/>
+  <testcase classname="com.tsi.training.rahman.mohammed.minesweeper.GridTest" name="com.tsi.training.rahman.mohammed.minesweeper.GridTest.testGetTotalBombs" time="0"/>
 </testsuite>
