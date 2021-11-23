@@ -1,44 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">com.tsi.training.rahman.mohammed.minesweeper</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package com.tsi.training.rahman.mohammed.minesweeper;
-
 import java.util.Objects;
 import java.util.Scanner;
 
-<span class="nc" id="L6">public class Main {</span>
+<span class="nc" id="L5">public class Main {</span>
     public static void main(String[] args){
-<span class="nc" id="L8">        Scanner input = new Scanner(System.in);</span>
+<span class="nc" id="L7">        Scanner input = new Scanner(System.in);</span>
 
-<span class="nc" id="L10">        System.out.println(&quot;Hello, welcome to Minesweeper! \n&quot;);</span>
+<span class="nc" id="L9">        System.out.println(&quot;Hello, welcome to Minesweeper! \n&quot;);</span>
 
-<span class="nc" id="L12">        Grid grid = new Grid();</span>
-<span class="nc" id="L13">        Square[][] gridSquares = grid.createGrid();</span>
-<span class="nc" id="L14">        grid.printGrid(gridSquares);</span>
-<span class="nc" id="L15">        boolean gameOver = false;</span>
-<span class="nc bnc" id="L16" title="All 2 branches missed.">        while (!gameOver) {</span>
-<span class="nc" id="L17">            System.out.println(&quot;Select a square:&quot;);</span>
-<span class="nc" id="L18">            String squareId = input.next();</span>
+<span class="nc" id="L11">        Grid grid = new Grid();</span>
+<span class="nc" id="L12">        Square[][] gridSquares = grid.createGrid();</span>
+<span class="nc" id="L13">        grid.printGrid(gridSquares);</span>
+<span class="nc" id="L14">        Game game = new Game();</span>
 
-<span class="nc" id="L20">            System.out.println(&quot;Reveal (r) or Flag (f) square?&quot;);</span>
-<span class="nc" id="L21">            String squareAction = input.next();</span>
+<span class="nc bnc" id="L16" title="All 2 branches missed.">        while (!game.isGameOver()) {</span>
+
+<span class="nc bnc" id="L18" title="All 2 branches missed.">            if (game.getCorrectFlags() == grid.getTotalBombs()) {</span>
+<span class="nc" id="L19">                System.out.println(&quot;YOU WON!!&quot;);</span>
+<span class="nc" id="L20">                game.setGameOver(true);</span>
+<span class="nc" id="L21">                break;</span>
+            }
+
+<span class="nc" id="L24">            System.out.println(&quot;Select a square:&quot;);</span>
+<span class="nc" id="L25">            String squareId = input.next();</span>
+
+<span class="nc" id="L27">            System.out.println(&quot;Reveal (r) or Flag (f) square?&quot;);</span>
+<span class="nc" id="L28">            String squareAction = input.next();</span>
+
+<span class="nc" id="L30">            game.screenUpdate(squareAction, squareId, gridSquares, grid);</span>
+<span class="nc" id="L31">        }</span>
+
+       // int correctFlags = 0;
+       // boolean gameOver = false;
+/*        while (!gameOver) {
+
+            if (correctFlags == grid.getTotalBombs()) {
+                System.out.println(&quot;YOU WON!!&quot;);
+                break;
+            }
+
+            System.out.println(&quot;Select a square:&quot;);
+            String squareId = input.next();
+
+            System.out.println(&quot;Reveal (r) or Flag (f) square?&quot;);
+            String squareAction = input.next();
 
             // finds square object using gridSquares[index 1][index 2] and sets reveal or flag to true depending on use input
-<span class="nc bnc" id="L24" title="All 2 branches missed.">            if (Objects.equals(squareAction.toLowerCase(), &quot;r&quot;)) {</span>
-<span class="nc" id="L25">                if (gridSquares[grid.getCoordinates().indexOf(squareId.charAt(0))]</span>
-<span class="nc bnc" id="L26" title="All 2 branches missed.">                        [grid.getCoordinates().indexOf(squareId.charAt(1))].isBomb()) {</span>
-<span class="nc" id="L27">                    grid.printGrid(gridSquares);</span>
-<span class="nc" id="L28">                    System.out.println(&quot;GAME OVER&quot;);</span>
-<span class="nc" id="L29">                    gameOver = true;</span>
+            if (Objects.equals(squareAction.toLowerCase(), &quot;r&quot;)) {
+                if (gridSquares[grid.getCoordinates().indexOf(squareId.charAt(0))]
+                        [grid.getCoordinates().indexOf(squareId.charAt(1))].isBomb()) {
+                    grid.printGrid(gridSquares);
+                    System.out.println(&quot;GAME OVER&quot;);
+                    gameOver = true;
                 } else {
-<span class="nc" id="L31">                    grid.reveal(grid.getCoordinates().indexOf(squareId.charAt(0)),</span>
-<span class="nc" id="L32">                            grid.getCoordinates().indexOf(squareId.charAt(1)),</span>
+                    grid.reveal(grid.getCoordinates().indexOf(squareId.charAt(0)),
+                            grid.getCoordinates().indexOf(squareId.charAt(1)),
                             gridSquares);
-<span class="nc" id="L34">                    grid.printGrid(gridSquares);</span>
+                    grid.printGrid(gridSquares);
                 }
-<span class="nc bnc" id="L36" title="All 2 branches missed.">            } else if (Objects.equals(squareAction.toLowerCase(), &quot;f&quot;)) {</span>
-<span class="nc" id="L37">                gridSquares[grid.getCoordinates().indexOf(squareId.charAt(0))]</span>
-<span class="nc" id="L38">                        [grid.getCoordinates().indexOf(squareId.charAt(1))].setFlagged(true);</span>
-<span class="nc" id="L39">                grid.printGrid(gridSquares);</span>
+            } else if (Objects.equals(squareAction.toLowerCase(), &quot;f&quot;)) {
+                gridSquares[grid.getCoordinates().indexOf(squareId.charAt(0))]
+                        [grid.getCoordinates().indexOf(squareId.charAt(1))].setFlagged(true);
+                if (gridSquares[grid.getCoordinates().indexOf(squareId.charAt(0))]
+                        [grid.getCoordinates().indexOf(squareId.charAt(1))].isBomb()) {
+                    correctFlags += 1;
+                }
+                grid.printGrid(gridSquares);
             }
-<span class="nc" id="L41">        }</span>
-<span class="nc" id="L42">    }</span>
+        } */
+<span class="nc" id="L71">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
